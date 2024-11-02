@@ -1,12 +1,11 @@
 import { Route, Redirect } from "react-router-dom";
-import React, { Suspense, lazy, Fragment } from "react";
-import Loader from "react-loaders";
+import React, { lazy, Fragment } from "react";
 
 import { ToastContainer } from "react-toastify";
 
 const UserPages = lazy(() => import("../../UserPages"));
 // const Applications = lazy(() => import("../../DemoPages/Applications"));
-// const Dashboards = lazy(() => import("../../DemoPages/Dashboards"));
+const Dashboards = lazy(() => import("../../Dashboards"));
 
 // const Widgets = lazy(() => import("../../DemoPages/Widgets"));
 // const Elements = lazy(() => import("../../DemoPages/Elements"));
@@ -23,9 +22,10 @@ const AppMain = () => {
 
             {/* Pages */}
             <Route path="/pages" component={UserPages}/>
+            <Route path="/pages/dashboards" component={Dashboards}/>
 
             <Route exact path="/" render={() => (
-                <Redirect to="/pages/login"/>
+                <Redirect to="/pages/dashboards/minimal-dashboard-1"/>
             )}/>
             <ToastContainer />
         </Fragment>

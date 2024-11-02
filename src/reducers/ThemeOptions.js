@@ -111,7 +111,7 @@ export const setBackgroundImage = backgroundImage  => ({
 
 export default function reducer(state = {
     backgroundColor: '',
-    headerBackgroundColor: '',
+    headerBackgroundColor: 'bg-happy-fisher',
     enableMobileMenuSmall: '',
     enableBackgroundImage: false,
     enableClosedSidebar: false,
@@ -120,7 +120,7 @@ export default function reducer(state = {
     enableSidebarShadow: true,
     enableFixedFooter: true,
     enableFixedSidebar: true,
-    colorScheme: 'white',
+    colorScheme: 'bg-happy-fisher',
     backgroundImage: sideBar6,
     backgroundImageOpacity: 'opacity-06',
     enablePageTitleIcon: true,

@@ -6,9 +6,49 @@ import bg1 from "../../../assets/utils/images/originals/login_1.png";
 import bg2 from "../../../assets/utils/images/originals/login_2.png";
 import bg3 from "../../../assets/utils/images/originals/login_3.png";
 
+import authService from "../../../services/authService";
+import {useAuth} from "../../../context/authContext";
+
 import { Col, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 export default class Login extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: ""
+    }
+  }
+
+  attemptLogin = (email, password) => {
+    authService
+      .login(email, password)
+      .then((response) => {
+        const data = response;
+        this.authContext.login(data);
+        this.authContext.redirect("/pages/about");
+      })
+      .catch((error) => {
+        console.error("Error en la solicitud:", error);
+      });
+  };
+
+  handleChangeEmail = (e) => {
+    this.setState({ email: e.target.value });
+  };
+
+  handleChangePassword = (e) => {
+    this.setState({ password: e.target.value });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.attemptLogin(this.state.email, this.state.password);
+  };
+
+  // const { login, authToken } = useAuth();
+
   render() {
     let settings = {
       dots: true,
@@ -33,13 +73,13 @@ export default class Login extends Component {
                     <div className="slide-img-bg"
                       style={{
                         backgroundImage: "url(" + bg1 + ")",
-                      }}/>
+                      }} />
                     <div className="slider-content">
-                      <h3>Perfect Balance</h3>
+                      <h3>SISTEMA ROBCODE</h3>
                       <p>
-                        ArchitectUI is like a dream. Some think it's too good to
-                        be true! Extensive collection of unified React Boostrap
-                        Components and Elements.
+                        El SISTEMA ROBCODE, integra Ciencia, Tecnología, Ingeniería, Arte, Matemáticas y Humanidades
+                        para crear experiencias educativas innovadoras que preparan a los estudiantes
+                        para los desafíos del futuro.
                       </p>
                     </div>
                   </div>
@@ -47,13 +87,11 @@ export default class Login extends Component {
                     <div className="slide-img-bg"
                       style={{
                         backgroundImage: "url(" + bg3 + ")",
-                      }}/>
+                      }} />
                     <div className="slider-content">
-                      <h3>Scalable, Modular, Consistent</h3>
+                      <h3>SISTEMA ROBCODE</h3>
                       <p>
-                        Easily exclude the components you don't require.
-                        Lightweight, consistent Bootstrap based styles across
-                        all elements and components
+                        El Sistema ROBCODE facilita proyectos educativos que combinan diversas áreas del conocimiento, permitiendo a los estudiantes aplicar habilidades prácticas en situaciones del mundo real.
                       </p>
                     </div>
                   </div>
@@ -61,12 +99,11 @@ export default class Login extends Component {
                     <div className="slide-img-bg opacity-6"
                       style={{
                         backgroundImage: "url(" + bg2 + ")",
-                      }}/>
+                      }} />
                     <div className="slider-content">
-                      <h3>Complex, but lightweight</h3>
+                      <h3>SISTEMA ROBCODE</h3>
                       <p>
-                        We've included a lot of components that cover almost all
-                        use cases for any type of application.
+                        Accede al contenido multimedia, sesiones digitales y libros interactivos del Sistema ROBCODE, diseñados para enriquecer el aprendizaje de robótica y programación.
                       </p>
                     </div>
                   </div>
@@ -77,8 +114,8 @@ export default class Login extends Component {
               <Col lg="9" md="10" sm="12" className="mx-auto app-login-box">
                 <div className="app-logo" />
                 <h4 className="mb-0">
-                  <div>Welcome back,</div>
-                  <span>Please sign in to your account.</span>
+                  <div>Bienvenido de vuelta,</div>
+                  <span>Por favor ingresa a tu cuenta.</span>
                 </h4>
                 {/* <h6 className="mt-3">
                   No account?{" "}
@@ -88,35 +125,35 @@ export default class Login extends Component {
                 </h6> */}
                 <Row className="divider" />
                 <div>
-                  <Form>
+                  <Form onSubmit={this.handleSubmit}>
                     <Row>
                       <Col md={6}>
                         <FormGroup>
-                          <Label for="exampleEmail">Email</Label>
-                          <Input type="email" name="email" id="exampleEmail" placeholder="Email here..."/>
+                          <Label for="email">Correo</Label>
+                          <Input type="email" name="email" value={this.state.email} onChange={this.handleChangeEmail} id="email" placeholder="Correo aquí..." />
                         </FormGroup>
                       </Col>
                       <Col md={6}>
                         <FormGroup>
-                          <Label for="examplePassword">Password</Label>
-                          <Input type="password" name="password" id="examplePassword" placeholder="Password here..."/>
+                          <Label for="password">Contraseña</Label>
+                          <Input type="password" value={this.state.password} onChange={this.handleChangePassword} name="password" id="password" placeholder="Contraseña aquí..." />
                         </FormGroup>
                       </Col>
                     </Row>
-                    <FormGroup check>
+                    {/* <FormGroup check>
                       <Input type="checkbox" name="check" id="exampleCheck" />
                       <Label for="exampleCheck" check>
                         Keep me logged in
                       </Label>
-                    </FormGroup>
+                    </FormGroup> */}
                     <Row className="divider" />
                     <div className="d-flex align-items-center">
                       <div className="ms-auto">
-                        <a href="https://colorlib.com/" onClick={(e) => e.preventDefault()} className="btn-lg btn btn-link" >
+                        {/* <a href="https://colorlib.com/" onClick={(e) => e.preventDefault()} className="btn-lg btn btn-link" >
                           Recover Password
-                        </a>{" "}
-                        <Button color="primary" size="lg">
-                          Login to Dashboard
+                        </a>{" "} */}
+                        <Button color="primary" size="lg" type="submit">
+                          Ingresar al Sistema
                         </Button>
                       </div>
                     </div>
@@ -130,3 +167,5 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.authContext = useAuth;
