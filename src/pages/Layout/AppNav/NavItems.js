@@ -1,21 +1,25 @@
-export const UpgradeNav = [
-    {
-        icon: 'pe-7s-diamond',
-        label: 'Upgrade TO PRO',
-        to: 'https://dashboardpack.com/theme-details/architectui-dashboard-react-pro/',
-    },
-];
+export const UpgradeNav = [];
 export const MainNav = [
     {
-        icon: 'pe-7s-rocket',
-        label: 'Dashboard Example',
-        to: '#/dashboards/crm',
+        icon: 'pe-7s-coffee',
+        label: 'Inicio',
+        to: '#/pages/dashboards/main',
+    },
+    {
+        icon: 'pe-7s-plugin',
+        label: 'Entidades',
+        to: '#/pages/dashboards/entities',
+    },
+    {
+        icon: 'pe-7s-world',
+        label: 'Cursos',
+        to: '#/pages/dashboards/courses',
     },
 ];
 export const ComponentsNav = [
     {
-        icon: 'pe-7s-diamond',
-        label: 'Elements',
+        icon: 'pe-7s-users',
+        label: 'Estudiantes',
         content: [
             {
                 label: 'Standard Buttons',
@@ -53,8 +57,8 @@ export const ComponentsNav = [
         ],
     },
     {
-        icon: 'pe-7s-car',
-        label: 'Components',
+        icon: 'pe-7s-users',
+        label: 'Instructores',
         content: [
             {
                 label: 'Tabs',
@@ -85,41 +89,26 @@ export const ComponentsNav = [
                 to: '#/components/maps',
             },
         ],
-    },
-    {
-        icon: 'pe-7s-display2',
-        label: 'Regular Tables',
-        to: '#/tables/regular-tables',
-    },
+    }
 ];
 export const FormsNav = [
     {
-        icon: 'pe-7s-light',
-        label: 'Controls',
-        to: '#/forms/controls',
-    },
-    {
-        icon: 'pe-7s-eyedropper',
-        label: 'Layouts',
-        to: '#/forms/layouts',
-    },
-    {
-        icon: 'pe-7s-pendrive',
-        label: 'Validation',
-        to: '#/forms/validation',
-    },
+        icon: 'pe-7s-display2',
+        label: 'Acerca de',
+        to: '#/pages/dashboards/about',
+    }
 ];
 export const WidgetsNav = [
-    {
-        icon: 'pe-7s-graph2',
-        label: 'Dashboard Boxes',
-        to: '#/widgets/chart-boxes-3',
-    },
+    // {
+    //     icon: 'pe-7s-graph2',
+    //     label: 'Dashboard Boxes',
+    //     to: '#/widgets/chart-boxes-3',
+    // },
 ];
 export const ChartsNav = [
-    {
-        icon: 'pe-7s-graph2',
-        label: 'ChartJS',
-        to: '#/charts/chartjs',
-    },
+    // {
+    //     icon: 'pe-7s-graph2',
+    //     label: 'ChartJS',
+    //     to: '#/charts/chartjs',
+    // },
 ];

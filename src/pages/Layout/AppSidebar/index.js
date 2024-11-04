@@ -13,9 +13,6 @@ import { setEnableMobileMenu } from "../../../reducers/ThemeOptions";
 
 class AppSidebar extends Component {
   state = {
-    items: [
-      { id: 1, text: 'Buy eggs' },
-    ]
   };
 
   toggleMobileSidebar = () => {

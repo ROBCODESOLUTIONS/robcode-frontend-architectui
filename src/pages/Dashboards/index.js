@@ -7,8 +7,8 @@ import { Route } from "react-router-dom";
 // import SalesDashboard from "./Sales/";
 // import CommerceDashboard from "./Commerce/";
 // import CRMDashboard from "./CRM/";
-import MinimalDashboard1 from "./Minimal/Variation1";
-import MinimalDashboard2 from "./Minimal/Variation2";
+import MinimalDashboard from "./Minimal/Variation1";
+// import MinimalDashboard2 from "./Minimal/Variation2";
 
 // Layout
 
@@ -30,8 +30,8 @@ const Dashboards = ({ match }) => (
           <Route path={`${match.url}/sales`} component={SalesDashboard} />
           <Route path={`${match.url}/commerce`} component={CommerceDashboard} />
           <Route path={`${match.url}/crm`} component={CRMDashboard} /> */}
-          <Route path={`${match.url}/minimal-dashboard-1`} component={MinimalDashboard1}/>
-          <Route path={`${match.url}/minimal-dashboard-2`} component={MinimalDashboard2}/>
+          <Route path={`${match.url}/main`} component={MinimalDashboard}/>
+          {/* <Route path={`${match.url}/minimal-dashboard-2`} component={MinimalDashboard2}/> */}
         </div>
       </div>
     </div>

@@ -25,7 +25,7 @@ const AppMain = () => {
             <Route path="/pages/dashboards" component={Dashboards}/>
 
             <Route exact path="/" render={() => (
-                <Redirect to="/pages/dashboards/minimal-dashboard-1"/>
+                <Redirect to="/pages/dashboards/main"/>
             )}/>
             <ToastContainer />
         </Fragment>

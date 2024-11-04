@@ -1,9 +1,7 @@
 import React, { Fragment } from "react";
 
-
-import { IoIosCalendar } from "react-icons/io";
-
-import PerfectScrollbar from "react-perfect-scrollbar";
+// import { IoIosCalendar } from "react-icons/io";
+// import PerfectScrollbar from "react-perfect-scrollbar";
 
 import {
   DropdownToggle,
@@ -27,7 +25,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import 'react-toastify/dist/ReactToastify.css';
 
 import city3 from "../../../../assets/utils/images/dropdown-header/city3.jpg";
-import avatar1 from "../../../../assets/utils/images/avatars/1.jpg";
+import avatar1 from "../../../../assets/utils/images/avatars/guest.png";
 
 class UserBox extends React.Component {
   constructor(props) {
@@ -95,7 +93,7 @@ class UserBox extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <div className="scroll-area-xs"
+                    {/* <div className="scroll-area-xs"
                       style={{
                         height: "150px",
                       }}>
@@ -139,11 +137,11 @@ class UserBox extends React.Component {
                           </NavItem>
                         </Nav>
                       </PerfectScrollbar>
-                    </div>
-                    <Nav vertical>
+                    </div> */}
+                    {/* <Nav vertical>
                       <NavItem className="nav-item-divider mb-0" />
-                    </Nav>
-                    <div className="grid-menu grid-menu-2col">
+                    </Nav> */}
+                    {/* <div className="grid-menu grid-menu-2col">
                       <Row className="g-0">
                         <Col sm="6">
                           <Button className="btn-icon-vertical btn-transition btn-transition-alt pt-2 pb-2"
@@ -160,15 +158,15 @@ class UserBox extends React.Component {
                           </Button>
                         </Col>
                       </Row>
-                    </div>
-                    <Nav vertical>
+                    </div> */}
+                    {/* <Nav vertical>
                       <NavItem className="nav-item-divider" />
                       <NavItem className="nav-item-btn text-center">
                         <Button size="sm" className="btn-wide" color="primary">
                           Open Messages
                         </Button>
                       </NavItem>
-                    </Nav>
+                    </Nav> */}
                   </DropdownMenu>
                 </UncontrolledButtonDropdown>
               </div>
@@ -176,14 +174,14 @@ class UserBox extends React.Component {
                 <div className="widget-heading">Alina Mclourd</div>
                 <div className="widget-subheading">VP People Manager</div>
               </div>
-              <div className="widget-content-right header-user-info ms-3">
+              {/* <div className="widget-content-right header-user-info ms-3">
                 <Button className="btn-shadow p-1" size="sm" onClick={this.notify2} color="info" id="Tooltip-1">
                   <IoIosCalendar color="#ffffff" fontSize="20px" />
                 </Button>
                 <UncontrolledTooltip placement="bottom" target={"Tooltip-1"}>
                   Click for Toastify Notifications!
                 </UncontrolledTooltip>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
