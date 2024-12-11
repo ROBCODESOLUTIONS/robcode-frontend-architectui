@@ -1,4 +1,6 @@
 import React, { Fragment, Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import Slider from "react-slick";
 
@@ -6,28 +8,23 @@ import bg1 from "../../../assets/utils/images/originals/login_1.png";
 import bg2 from "../../../assets/utils/images/originals/login_2.png";
 import bg3 from "../../../assets/utils/images/originals/login_3.png";
 
-import authService from "../../../services/authService";
-import {useAuth} from "../../../context/authContext";
-
 import { Col, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { login } from "../../../reducers/RobcodeService";
 
-export default class Login extends Component {
+class Login extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
     }
   }
 
   attemptLogin = (email, password) => {
-    authService
-      .login(email, password)
-      .then((response) => {
-        const data = response;
-        this.authContext.login(data);
-        this.authContext.redirect("/pages/about");
+    this.props.login(email, password)
+      .then(() => {
+        this.props.history.push("/pages/dashboard/main");
       })
       .catch((error) => {
         console.error("Error en la solicitud:", error);
@@ -47,8 +44,6 @@ export default class Login extends Component {
     this.attemptLogin(this.state.email, this.state.password);
   };
 
-  // const { login, authToken } = useAuth();
-
   render() {
     let settings = {
       dots: true,
@@ -62,6 +57,10 @@ export default class Login extends Component {
       autoplay: true,
       adaptiveHeight: true,
     };
+
+    if (this.props.accessToken) {
+      this.props.history.push("/pages/dashboard/main");
+    }
     return (
       <Fragment>
         <div className="h-100">
@@ -168,4 +167,9 @@ export default class Login extends Component {
   }
 }
 
-Login.authContext = useAuth;
+const mapStateToProps = (state) => ({
+  accessToken: state.RobcodeService.accessToken,
+  login
+});
+
+export default withRouter(connect(mapStateToProps, { login })(Login));

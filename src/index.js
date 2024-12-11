@@ -24,8 +24,8 @@ const renderApp = (Component) => (
 const root = createRoot(rootElement).render(renderApp(Main));
 
 if (module.hot) {
-  module.hot.accept("./pages/Main", () => {
-    const NextApp = require("./pages/Main").default;
+  module.hot.accept("./pages/UserPages/Login", () => {
+    const NextApp = require("./pages/UserPages/Login").default;
     root.render(renderApp(NextApp));
   });
 }

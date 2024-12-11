@@ -1,18 +1,15 @@
 import Swal from 'sweetalert2'
 
-const API_URL = process.env.REACT_APP_API_URL;
-
-const myHeaders = new Headers();
-myHeaders.append("Accept", "application/json");
-myHeaders.append("Content-Type", "application/json");
-
 export const login = (email, password) => {
-
+    const API_URL = process.env.REACT_APP_API_URL;
+    const myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    
     return fetch(`${API_URL}/api/login`, {
         method: 'POST',
         headers: myHeaders,
-        body: JSON.stringify({ email, password }),
-        redirect: "follow"
+        body: JSON.stringify({ email, password })
     })
         .then((response) => {
             if (!response.ok) {
@@ -30,6 +27,14 @@ export const login = (email, password) => {
             }
             throw new Error(data.message || 'Error desconocido');
         })
+
+};
+
+const getCookie = (name) => {
+    console.log(name);
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
 };
 
 export default {

@@ -3,100 +3,47 @@ export const MainNav = [
     {
         icon: 'pe-7s-coffee',
         label: 'Inicio',
-        to: '#/pages/dashboards/main',
+        to: '#/pages/dashboard/main',
     },
     {
-        icon: 'pe-7s-plugin',
+        icon: 'pe-7s-culture',
         label: 'Entidades',
-        to: '#/pages/dashboards/entities',
+        to: '#/pages/dashboard/entities',
     },
     {
         icon: 'pe-7s-world',
         label: 'Cursos',
-        to: '#/pages/dashboards/courses',
+        to: '#/pages/dashboard/courses',
     },
-];
-export const ComponentsNav = [
     {
         icon: 'pe-7s-users',
         label: 'Estudiantes',
-        content: [
-            {
-                label: 'Standard Buttons',
-                to: '#/elements/buttons-standard',
-            },
-            {
-                label: 'Dropdowns',
-                to: '#/elements/dropdowns',
-
-            },
-            {
-                label: 'Icons',
-                to: '#/elements/icons',
-            },
-            {
-                label: 'Badges',
-                to: '#/elements/badges-labels',
-            },
-            {
-                label: 'Cards',
-                to: '#/elements/cards',
-            },
-            {
-                label: 'List Groups',
-                to: '#/elements/list-group',
-            },
-            {
-                label: 'Navigation Menus',
-                to: '#/elements/navigation',
-            },
-            {
-                label: 'Utilities',
-                to: '#/elements/utilities',
-            },
-        ],
+        to: '#/pages/dashboard/students',
     },
     {
         icon: 'pe-7s-users',
         label: 'Instructores',
-        content: [
-            {
-                label: 'Tabs',
-                to: '#/components/tabs',
-            },
-            {
-                label: 'Notifications',
-                to: '#/components/notifications',
-            },
-            {
-                label: 'Modals',
-                to: '#/components/modals',
-            },
-            {
-                label: 'Progress Bar',
-                to: '#/components/progress-bar',
-            },
-            {
-                label: 'Tooltips & Popovers',
-                to: '#/components/tooltips-popovers',
-            },
-            {
-                label: 'Carousel',
-                to: '#/components/carousel',
-            },
-            {
-                label: 'Maps',
-                to: '#/components/maps',
-            },
-        ],
-    }
-];
-export const FormsNav = [
+        to: '#/pages/dashboard/teachers',
+    },
+    {
+        icon: 'pe-7s-rocket',
+        label: 'Recursos',
+        to: '#/pages/dashboard/resources',
+    },
+    {
+        icon: 'pe-7s-photo',
+        label: 'Material de apoyo',
+        to: '#/pages/dashboard/material',
+    },
     {
         icon: 'pe-7s-display2',
         label: 'Acerca de',
-        to: '#/pages/dashboards/about',
-    }
+        to: '#/pages/dashboard/about',
+    }       
+];
+export const ComponentsNav = [
+];
+export const FormsNav = [
 ];
 export const WidgetsNav = [
     // {

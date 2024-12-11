@@ -1,11 +1,12 @@
 import { createContext, useState, useContext } from 'react';
 import PropTypes from "prop-types";
-import useNavigate from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
     const [authToken, setAuthToken] = useState(JSON.parse(localStorage.getItem('token')));
+    // const navigate = useNavigate();
 
     const login = (token) => {
         localStorage.setItem('token', JSON.stringify(token));
@@ -17,12 +18,8 @@ export const AuthProvider = ({ children }) => {
         setAuthToken(null);
     };
 
-    const navigate = (path) => {
-        navigate(path);
-    };
-
     return (
-        <AuthContext.Provider value={{ authToken, login, logout, navigate }}>
+        <AuthContext.Provider value={{ authToken, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
