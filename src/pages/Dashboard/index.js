@@ -10,13 +10,14 @@ import { Route } from "react-router-dom";
 import HomeIndex from "./Home/index";
 
 import EntitiesIndex from "./Entities/index";
-import EntitiesCreate from "./Entities/createUpdate";
+import EntitiesCreateUpdate from "./Entities/createUpdate";
 
 
 import StudentsIndex from "./Students/index";
 import TeachersIndex from "./Teachers/index";
 import CoursesIndex from "./Courses/index";
 import ResourcesIndex from "./Resources/index";
+import GamesIndex from "./Games/index";
 import MaterialIndex from "./Material/index";
 
 // Layout
@@ -40,27 +41,30 @@ const Dashboards = ({ match }) => (
           <Route path={`${match.url}/about`} component={HomeIndex}/>
 
           {/* CRUD Pages - Entities */}
-          <Route path={`${match.url}/create/entity`} component={EntitiesCreate}/>
           <Route path={`${match.url}/entities`} component={EntitiesIndex}/>
+          <Route path={`${match.url}/create/entity`} component={EntitiesCreateUpdate}/>
+          <Route path={`${match.url}/edit/entities/:entityId`} component={EntitiesCreateUpdate}/>
           
           {/* CRUD Pages - Students */}
-          <Route path={`${match.url}/create/student`} component={EntitiesCreate}/>
+          <Route path={`${match.url}/create/student`} component={EntitiesCreateUpdate}/>
           <Route path={`${match.url}/students`} component={StudentsIndex}/>
-          <Route path={`${match.url}/create/teacher`} component={EntitiesCreate}/>
 
           {/* CRUD Pages - Teachers */}
+          <Route path={`${match.url}/create/teacher`} component={EntitiesCreateUpdate}/>
           <Route path={`${match.url}/teachers`} component={TeachersIndex}/>
-          <Route path={`${match.url}/create/course`} component={EntitiesCreate}/>
 
           {/* CRUD Pages - Courses */}
           <Route path={`${match.url}/courses`} component={CoursesIndex}/>
-          <Route path={`${match.url}/create/resource`} component={EntitiesCreate}/>
+          <Route path={`${match.url}/create/course`} component={EntitiesCreateUpdate}/>
 
           {/* CRUD Pages - Resources */}
+          <Route path={`${match.url}/games`} component={GamesIndex}/>
           <Route path={`${match.url}/resources`} component={ResourcesIndex}/>
+          <Route path={`${match.url}/create/resource`} component={EntitiesCreateUpdate}/>
 
           {/* Static non connected pages */}
           <Route path={`${match.url}/material`} component={MaterialIndex}/>
+          <Route path={`${match.url}/create/material`} component={EntitiesCreateUpdate}/>
         </div>
       </div>
     </div>

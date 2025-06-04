@@ -4,31 +4,34 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-export default class GenericTable extends Component {
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
+class GenericTable extends Component {
     constructor(props) {
         super(props);
-        console.log(props)
 
         this.state = {
             columnDefs: this.props.columnDefs,
-            rowData: this.props.rowData,
             defaultColDef: {
-                // sortable: true,
-                // resizable: true,
-                // filter: true,
-                // floatingFilter: true,
-                // floatingFilterComponentParams: {
-                //     debounceMs: 1000,
-                // },
                 cellStyle: {
                     'textAlign': 'left',
                     'padding': '5px',
                     'fontSize': '14px',
                 },
             },
+            rowData: this.props.rowData
         };
+
+        console.log(this.props.rowData, this.state)
     }
 
+    componentDidUpdate(prevProps) {
+      if (this.props.rowData !== prevProps.rowData) {
+        this.setState({rowData: this.props.rowData})
+      }
+    }
+    
     render() {
         return (
             <div className="ag-theme-alpine" style={{ height: 400, width: '100%' }}>
@@ -41,3 +44,12 @@ export default class GenericTable extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+    accessToken: state.RobcodeService.accessToken,
+});
+
+const mapDispatchToProps = {
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GenericTable));

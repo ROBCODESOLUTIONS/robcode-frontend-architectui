@@ -1,7 +1,7 @@
 // src/components/TabsComponent.jsx
 import { useState, Suspense } from "react";
-// import SeriesComponent from "./SeriesComponent";
-// import GalleryComponent from "./GalleryComponent";
+import SeasonsComponent from "./SeasonsComponent";
+import BooksComponent from "./BooksComponent";
 import ProjectsComponent from "./ProjectsComponent";
 import { Tab, Tabs } from "react-bootstrap";
 
@@ -23,12 +23,12 @@ const TabsComponent = () => {
       </Tab>
       <Tab eventKey="series" title="Sesiones Digitales">
         <Suspense fallback={<div>Cargando...</div>}>
-          {/* <SeriesComponent /> */}
+          <SeasonsComponent />
         </Suspense>
       </Tab>
       <Tab eventKey="libros" title="Libros">
         <Suspense fallback={<div>Cargando...</div>}>
-          {/* <GalleryComponent /> */}
+          <BooksComponent />
         </Suspense>
       </Tab>
     </Tabs>

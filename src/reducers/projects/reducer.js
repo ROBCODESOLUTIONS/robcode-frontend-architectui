@@ -11,7 +11,7 @@ export const getProjects = (accessToken) => {
         myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
         return fetch(`${API_URL}/api/content/projects`, {
-            method: 'POST',
+            method: 'GET',
             headers: myHeaders,
         })
             .then((response) => {
@@ -27,6 +27,37 @@ export const getProjects = (accessToken) => {
                 dispatch(setProjectsError(error.message));
                 Swal.fire({
                     title: "Error obteniendo proyectos.",
+                    text: error.message,
+                    icon: "error"
+                });
+            });
+    };
+};
+
+export const deleteProject = (accessToken, id) => {
+    return (dispatch) => {
+        const API_URL = process.env.REACT_APP_API_URL;
+        const myHeaders = new Headers();
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
+        return fetch(`${API_URL}/api/content/projects/${id}`, {
+            method: 'DELETE',
+            headers: myHeaders,
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error eliminando proyecto.");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.table(data)
+            })
+            .catch((error) => {
+                dispatch(setProjectsError(error.message));
+                Swal.fire({
+                    title: "Error eliminando proyecto.",
                     text: error.message,
                     icon: "error"
                 });
@@ -55,7 +86,7 @@ export default function reducer(state = initialState, action = {}) {
         case SET_PROJECTS:
             return {
                 ...state,
-                projects: action.projects,
+                rowData: action.projects,
                 error: null
             };
         case SET_PROJECTS_ERROR:

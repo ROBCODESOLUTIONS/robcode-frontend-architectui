@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 
 import { HashRouter } from "react-router-dom";
 import "./assets/base.scss";
+import "./assets/custom.scss";
 import Main from "./pages/Main";
 import configureStore from "./config/configureStore";
 import { Provider } from "react-redux";

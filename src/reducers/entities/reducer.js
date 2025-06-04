@@ -6,6 +6,7 @@ export const SET_ENTITIES_ERROR = 'ENTITIES/SET_ENTITIES_ERROR'; // Nueva acció
 
 
 export const getEntities = (accessToken) => {
+    console.log("Fetching entities...");
     return (dispatch) => {
         const API_URL = process.env.REACT_APP_API_URL;
         const myHeaders = new Headers();
@@ -149,7 +150,7 @@ export const setEntitiesError = (error) => ({
 });
 
 const initialState = {
-    entities: [],
+    rowData: [],
     error: null,
 };
 
@@ -158,7 +159,7 @@ export default function reducer(state = initialState, action = {}) {
         case SET_ENTITIES:
             return {
                 ...state,
-                entities: action.entities,
+                rowData: action.entities,
                 error: null
             };
         case SET_ENTITIES_ERROR:

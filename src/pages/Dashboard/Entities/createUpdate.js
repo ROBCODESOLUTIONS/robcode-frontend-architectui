@@ -3,11 +3,11 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Swal from "sweetalert2";
 
-import { createEntity, updateEntity } from "../../../reducers/entities/reducer";
+import { createEntity, getEntities, updateEntity } from "../../../reducers/entities/reducer";
 
 import defaultImageUrl from "../../../assets/utils/images/originals/interconnected.jpg";
 
-class EntitiesCreate extends React.Component {
+class EntitiesCreateUpdate extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,24 +22,68 @@ class EntitiesCreate extends React.Component {
                 description: "",
             },
             isLoading: false,
-            access_token
+            rowData: [],
         };
 
         const { match } = this.props;
-        if (match.params.id) {
-            this.state.entity.id = match.params.id;
+        console.log(match.params.entityId)
+        if (match.params.entityId) {
+            this.state.entity.id = match.params.entityId;
         }
     }
 
-    onFileUpload(e) {
+    componentDidMount() {
+        console.log(this.props.entities.length === 0, this.props.entities)
+        if (this.props.entities.length === 0) {
+            this.fetchEntities();
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.accessToken !== prevProps.accessToken || this.props.entities !== prevProps.entities) {
+            this.fetchEntities();
+        }
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.loading !== this.state.loading ||
+            nextState.error !== this.state.error ||
+            nextState.rowData !== this.state.rowData;
+    }
+
+    async fetchEntities() {
+        try {
+            this.setState({ loading: true, error: null });
+            const { access_token } = JSON.parse(this.props.accessToken);
+            await this.props.getEntities(access_token);
+            const matchedEntity = this.props.entities.find(entity => entity.id.toString() === this.state.entity.id);
+            if (matchedEntity) {
+                this.setState({ entity: matchedEntity, entities: this.props.entities });
+            }
+        } catch (error) {
+            console.error("Error fetching entities: ", error);
+            this.setState({ error: "Error al obtener las entidades.", rowData: [] });
+        } finally {
+            this.setState({ loading: false });
+        }
+    }
+
+    handleFileUploadChange = (e) => {
         e.preventDefault();
         const file = e.target.files[0];
         const reader = new FileReader();
-        reader.onload = (e) => {
-            this.setState({ entity: { ...this.state.entity, image: e.target.result } });
+
+        reader.onloadend = () => {
+            this.setState({ entity: { ...this.state.entity, image: reader.result } });
         };
-        return reader.readAsDataURL(file);
-    }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            this.setState({ entity: { ...this.state.entity, image: defaultImageUrl } })
+        }
+    };
+
 
     onSubmitForm = (e) => {
         e.preventDefault();
@@ -57,7 +101,7 @@ class EntitiesCreate extends React.Component {
         const data = {
             name: this.state.entity.name,
             image: this.state.entity.image,
-            description: this.state.entity.description,
+            description: this.state.entity.description ?? "",
         };
 
         if (this.state.entity.id) {
@@ -65,10 +109,6 @@ class EntitiesCreate extends React.Component {
         } else {
             createEntity(this.state.access_token, data);
         }
-    }
-
-    componentDidMount = () => {
-        //display the id when the component mounts
     }
 
     render() {
@@ -84,7 +124,7 @@ class EntitiesCreate extends React.Component {
                         <div>
                             <h1>Entidades</h1>
                             <div className="page-title-subheading">
-                                {(this.state.entity.id.length === 0 ? 'Crear nueva' : 'Editar')} entidad
+                                {(this.state.entity.id.length === '' ? 'Crear nueva' : 'Editar')} entidad
                             </div>
                         </div>
                     </div>
@@ -124,7 +164,7 @@ class EntitiesCreate extends React.Component {
                                             className="form-control my-2"
                                             name="image"
                                             id="image"
-                                            onChange={(e) => this.setState({ entity: { ...this.state.entity, image: this.onFileUpload(e) } })}
+                                            onChange={(e) => this.handleFileUploadChange(e)}
                                             disabled={this.state.isLoading}
                                         />
                                     </div>
@@ -159,12 +199,14 @@ class EntitiesCreate extends React.Component {
         </Fragment>
     }
 }
-
 const mapStateToProps = (state) => ({
     accessToken: state.RobcodeService.accessToken,
+    entities: state.Entities?.rowData ?? [],
 });
 
 const mapDispatchToProps = {
+    getEntities
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EntitiesCreate));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EntitiesCreateUpdate));
+

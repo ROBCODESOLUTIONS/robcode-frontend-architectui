@@ -68,7 +68,7 @@ class Login extends Component {
             <Col lg="4" className="d-none d-lg-block">
               <div className="slider-light">
                 <Slider {...settings}>
-                  <div className="h-100 d-flex justify-content-center align-items-center bg-plum-plate">
+                  <div className="h-100 d-flex justify-content-center align-items-center">
                     <div className="slide-img-bg"
                       style={{
                         backgroundImage: "url(" + bg1 + ")",
@@ -82,7 +82,7 @@ class Login extends Component {
                       </p>
                     </div>
                   </div>
-                  <div className="h-100 d-flex justify-content-center align-items-center bg-premium-dark">
+                  <div className="h-100 d-flex justify-content-center align-items-center">
                     <div className="slide-img-bg"
                       style={{
                         backgroundImage: "url(" + bg3 + ")",
@@ -94,7 +94,7 @@ class Login extends Component {
                       </p>
                     </div>
                   </div>
-                  <div className="h-100 d-flex justify-content-center align-items-center bg-sunny-morning">
+                  <div className="h-100 d-flex justify-content-center align-items-center">
                     <div className="slide-img-bg opacity-6"
                       style={{
                         backgroundImage: "url(" + bg2 + ")",
@@ -111,7 +111,7 @@ class Login extends Component {
             </Col>
             <Col lg="8" md="12" className="h-100 d-flex bg-white justify-content-center align-items-center">
               <Col lg="9" md="10" sm="12" className="mx-auto app-login-box">
-                <div className="app-logo" />
+                <div className="app-logo app-logo-login" />
                 <h4 className="mb-0">
                   <div>Bienvenido de vuelta,</div>
                   <span>Por favor ingresa a tu cuenta.</span>

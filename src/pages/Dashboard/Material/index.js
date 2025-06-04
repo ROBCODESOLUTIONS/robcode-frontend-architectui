@@ -13,12 +13,12 @@ export default class MaterialIndex extends React.Component {
                 { headerName: "Videos de apoyo", field: "video_apoyo", flex: 1, cellRenderer: ResourcesRow }
             ],
             rowData: [
-                { descripcion: "Links teóricos y videos grado SEXTO", link_teorico: "https://riunet.upv.es/bitstream/10251/174666/1/Pascual%20-%20Diseno%20y%20construccion%20de%20un%20brazo%20robotico%20controlado%20mediante%20Arduino.pdf", video_apoyo: "https://www.youtube.com/watch?v=GwQ7WoC_pIo", },
-                { descripcion: "Links teóricos y videos grado SÉPTIMO", link_teorico: "https://riunet.upv.es/bitstream/10251/174666/1/Pascual%20-%20Diseno%20y%20construccion%20de%20un%20brazo%20robotico%20controlado%20mediante%20Arduino.pdf", video_apoyo: "https://www.youtube.com/watch?v=GwQ7WoC_pIo", },
-                { descripcion: "Links teóricos y videos grado OCTAVO", link_teorico: "https://todosobretrafico.files.wordpress.com/2014/03/semaforos.pdf", video_apoyo: "https://www.youtube.com/watch?v=shvSliqzcCE", },
-                { descripcion: "Links teóricos y videos grado NOVENO", link_teorico: "https://todosobretrafico.files.wordpress.com/2014/03/semaforos.pdf", video_apoyo: "https://www.youtube.com/watch?v=shvSliqzcCE", },
-                { descripcion: "Links teóricos y videos grado DÉCIMO", link_teorico: "https://dspace.ups.edu.ec/bitstream/123456789/10401/1/UPS-GT001444.pdf", video_apoyo: "https://www.youtube.com/watch?v=NMhn1rJv_jg&t=8s", },
-                { descripcion: "Links teóricos y videos grado ONCE", link_teorico: "https://www.redalyc.org/pdf/852/85200804.pdf", video_apoyo: "https://www.youtube.com/watch?v=RzEjqJHW-NU", }
+                { descripcion: "Links teóricos y videos Grado SEXTO", link_teorico: "https://www.automatismosglobal.com/controles-de-acceso/que-es-una-talanquera-vehicular-y-como-funciona/?srsltid=AfmBOoqme6csiEWscaYMqZV6KhixSUZ9c2Qxk0AXGBJYbgXCqkAo8v5r", video_apoyo: "https://www.youtube.com/watch?v=0y24vQyj1Qk", },
+                { descripcion: "Links teóricos y videos Grado SÉPTIMO", link_teorico: "https://www.wenglor.com/es/Principio-de-funcionamiento-y-tecnologia-de-un-sensor-de-ultrasonidos/s/Funktionsprinzip+und+Technologie+eines+Ultraschall-Sensors?BranchenundIndustrienlinks=%3A1&BranchenundIndustrienrechts=%3A1", video_apoyo: "https://www.youtube.com/watch?v=ouZ9nDQoczE", },
+                { descripcion: "Links teóricos y videos Grado OCTAVO", link_teorico: "https://latam.kaspersky.com/resource-center/preemptive-safety/smart-home-security?srsltid=AfmBOorx7ww45T2mEX82ICwGuRHQpCw_HK1CiIXFj8lH0yyv_DY7vsA7", video_apoyo: "https://www.youtube.com/watch?v=iWWGn2Yi1Ek", },
+                { descripcion: "Links teóricos y videos Grado NOVENO", link_teorico: "https://www.automatizacionparatodos.com/sensor-de-humedad-de-suelo-con-arduino/", video_apoyo: "https://www.youtube.com/watch?v=gfY_il4CW_M", },
+                { descripcion: "Links teóricos y videos Grado DÉCIMO", link_teorico: "https://tecnopatafisica.com/tecno3eso/teoria/robotica/104-arduino-sensor-infrarrojos-para-robot-siguelineas", video_apoyo: "https://www.youtube.com/watch?v=p88E8GOHzxQ ", },
+                { descripcion: "Links teóricos y videos Grado ONCE", link_teorico: "https://as.com/meristation/2018/04/11/betech/1523477857_869374.html", video_apoyo: "https://www.youtube.com/watch?v=Zd1dugifvOo&t=20s ", }
             ]
         };
     }

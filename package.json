@@ -54,6 +54,7 @@
     "rc-tooltip": "^6.1.0",
     "rc-tree": "^5.7.12",
     "react": "^18.2.0",
+    "react-animated-css": "^1.2.1",
     "react-animations": "^1.0.0",
     "react-anime": "^4.1.1",
     "react-apexcharts": "^1.4.0",
