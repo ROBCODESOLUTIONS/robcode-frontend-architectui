@@ -23,6 +23,11 @@ export default class GamesIndex extends React.Component {
                     title: "4. Construcción de Robots - Planeta MechaPrime",
                     // title: "4. Construcción de Robots.",
                     body: "<iframe class='phaser-game' src='/games/step-4/index.html' width='100%' style='min-height: 500px' allowFullScreen></iframe>",
+                },
+                "juego-5": {
+                    title: "5. Muy pronto",
+                    // title: "4. Construcción de Robots.",
+                    body: "",
                 }
             },
             selectedContent: null,
