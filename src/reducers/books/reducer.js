@@ -16,7 +16,7 @@ export const getBooks = (accessToken) => {
         })
             .then((response) => {
                 if (!response.ok) {
-                    throw new Error("Error obteniendo libros."); 
+                    throw new Error("Error obteniendo libros.");
                 }
                 return response.json();
             })
@@ -77,7 +77,7 @@ export const setBooksError = (error) => ({
 });
 
 const initialState = {
-    Books: [],
+    rowData: [],
     error: null,
 };
 
@@ -86,13 +86,13 @@ export default function reducer(state = initialState, action = {}) {
         case SET_BOOKS:
             return {
                 ...state,
-                rowData: action.Books,
-                error: null
+                rowData: Array.isArray(action.BOOKS) ? action.BOOKS : [],
+                error: null,
             };
         case SET_BOOKS_ERROR:
             return {
                 ...state,
-                error: action.error
+                error: action.error,
             };
         default:
             return state;

@@ -45,6 +45,7 @@ export const createEntity = (accessToken, data) => {
         const API_URL = process.env.REACT_APP_API_URL;
         const myHeaders = new Headers();
         myHeaders.append("Accept", "application/json");
+        myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${accessToken}`);
         console.log(accessToken, data, myHeaders.get('Authorization'))
         
@@ -78,6 +79,7 @@ export const updateEntity = (accessToken, data, id) => {
         const API_URL = process.env.REACT_APP_API_URL;
         const myHeaders = new Headers();
         myHeaders.append("Accept", "application/json");
+        myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
         return fetch(`${API_URL}/api/entity/${id}`, {

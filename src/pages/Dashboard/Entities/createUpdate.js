@@ -12,7 +12,7 @@ class EntitiesCreateUpdate extends React.Component {
     constructor(props) {
         super(props);
 
-        const { access_token } = JSON.parse(this.props.accessToken)
+        const { access_token } = JSON.parse(this.props.accessToken);
 
         this.state = {
             entity: {
@@ -22,20 +22,20 @@ class EntitiesCreateUpdate extends React.Component {
                 description: "",
             },
             isLoading: false,
-            rowData: [],
+            error: null,
         };
 
         const { match } = this.props;
-        console.log(match.params.entityId)
         if (match.params.entityId) {
             this.state.entity.id = match.params.entityId;
         }
     }
 
     componentDidMount() {
-        console.log(this.props.entities.length === 0, this.props.entities)
         if (this.props.entities.length === 0) {
             this.fetchEntities();
+        } else {
+            this.populateEntityFromProps();
         }
     }
 
@@ -46,25 +46,31 @@ class EntitiesCreateUpdate extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return nextState.loading !== this.state.loading ||
+        return nextState.isLoading !== this.state.isLoading ||
             nextState.error !== this.state.error ||
-            nextState.rowData !== this.state.rowData;
+            nextState.entity !== this.state.entity;
     }
 
     async fetchEntities() {
         try {
-            this.setState({ loading: true, error: null });
+            this.setState({ isLoading: true, error: null });
             const { access_token } = JSON.parse(this.props.accessToken);
             await this.props.getEntities(access_token);
-            const matchedEntity = this.props.entities.find(entity => entity.id.toString() === this.state.entity.id);
-            if (matchedEntity) {
-                this.setState({ entity: matchedEntity, entities: this.props.entities });
-            }
+            this.populateEntityFromProps();
         } catch (error) {
             console.error("Error fetching entities: ", error);
-            this.setState({ error: "Error al obtener las entidades.", rowData: [] });
+            this.setState({ error: "Error al obtener las entidades." });
         } finally {
-            this.setState({ loading: false });
+            this.setState({ isLoading: false });
+        }
+    }
+
+    populateEntityFromProps() {
+        if (this.state.entity.id) {
+            const matchedEntity = this.props.entities.find(entity => entity.id.toString() === this.state.entity.id);
+            if (matchedEntity) {
+                this.setState({ entity: matchedEntity });
+            }
         }
     }
 
@@ -80,15 +86,15 @@ class EntitiesCreateUpdate extends React.Component {
         if (file) {
             reader.readAsDataURL(file);
         } else {
-            this.setState({ entity: { ...this.state.entity, image: defaultImageUrl } })
+            this.setState({ entity: { ...this.state.entity, image: defaultImageUrl } });
         }
     };
 
-
-    onSubmitForm = (e) => {
+    onSubmitForm = async (e) => {
         e.preventDefault();
+        const { access_token } = JSON.parse(this.props.accessToken);
+
         if (!this.state.entity.name || !this.state.entity.image) {
-            console.error("Form Data:", this.state.entity);
             Swal.fire({
                 title: "Error",
                 icon: "error",
@@ -104,10 +110,23 @@ class EntitiesCreateUpdate extends React.Component {
             description: this.state.entity.description ?? "",
         };
 
-        if (this.state.entity.id) {
-            updateEntity(this.state.access_token, data, this.state.entity.id);
-        } else {
-            createEntity(this.state.access_token, data);
+        try {
+            if (this.state.entity.id) {
+                await this.props.updateEntity(access_token, data, this.state.entity.id);
+            } else {
+                await this.props.createEntity(access_token, data);
+            }
+            // Recargar entidades y navegar tras éxito
+            await this.props.getEntities(access_token);
+            this.props.history.push("/pages/dashboard/entities");
+        } catch (err) {
+            Swal.fire({
+                title: "Error",
+                icon: "error",
+                text: "No se pudo guardar la entidad.",
+            });
+        } finally {
+            this.setState({ isLoading: false });
         }
     }
 
@@ -124,7 +143,7 @@ class EntitiesCreateUpdate extends React.Component {
                         <div>
                             <h1>Entidades</h1>
                             <div className="page-title-subheading">
-                                {(this.state.entity.id.length === '' ? 'Crear nueva' : 'Editar')} entidad
+                                {this.state.entity.id ? 'Editar' : 'Crear nueva'} entidad
                             </div>
                         </div>
                     </div>
@@ -164,14 +183,13 @@ class EntitiesCreateUpdate extends React.Component {
                                             className="form-control my-2"
                                             name="image"
                                             id="image"
-                                            onChange={(e) => this.handleFileUploadChange(e)}
+                                            onChange={this.handleFileUploadChange}
                                             disabled={this.state.isLoading}
                                         />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="description">Descripción</label>
                                         <textarea
-                                            type="text"
                                             placeholder="Descripción"
                                             className="form-control my-2"
                                             name="description"
@@ -205,8 +223,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    getEntities
+    getEntities,
+    createEntity,
+    updateEntity,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EntitiesCreateUpdate));
-

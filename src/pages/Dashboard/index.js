@@ -14,8 +14,14 @@ import EntitiesCreateUpdate from "./Entities/createUpdate";
 
 
 import StudentsIndex from "./Students/index";
+import StudentsCreateUpdate from "./Students/createUpdate";
+
 import TeachersIndex from "./Teachers/index";
+import TeachersCreateUpdate from "./Teachers/createUpdate";
+
 import CoursesIndex from "./Courses/index";
+import CoursesCreateUpdate from "./Courses/createUpdate";
+
 import ResourcesIndex from "./Resources/index";
 import GamesIndex from "./Games/index";
 import MaterialIndex from "./Material/index";
@@ -46,16 +52,19 @@ const Dashboards = ({ match }) => (
           <Route path={`${match.url}/edit/entities/:entityId`} component={EntitiesCreateUpdate}/>
           
           {/* CRUD Pages - Students */}
-          <Route path={`${match.url}/create/student`} component={EntitiesCreateUpdate}/>
+          <Route path={`${match.url}/create/student`} component={StudentsCreateUpdate}/>
           <Route path={`${match.url}/students`} component={StudentsIndex}/>
+          <Route path={`${match.url}/edit/students/:studentId`} component={StudentsCreateUpdate}/>
 
           {/* CRUD Pages - Teachers */}
-          <Route path={`${match.url}/create/teacher`} component={EntitiesCreateUpdate}/>
+          <Route path={`${match.url}/create/teacher`} component={TeachersCreateUpdate}/>
           <Route path={`${match.url}/teachers`} component={TeachersIndex}/>
+          <Route path={`${match.url}/edit/teachers/:teacherId`} component={TeachersCreateUpdate}/>
 
           {/* CRUD Pages - Courses */}
           <Route path={`${match.url}/courses`} component={CoursesIndex}/>
-          <Route path={`${match.url}/create/course`} component={EntitiesCreateUpdate}/>
+          <Route path={`${match.url}/create/course`} component={CoursesCreateUpdate}/>
+          <Route path={`${match.url}/edit/course/:entityId`} component={CoursesCreateUpdate}/>
 
           {/* CRUD Pages - Resources */}
           <Route path={`${match.url}/games`} component={GamesIndex}/>

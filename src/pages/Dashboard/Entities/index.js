@@ -19,6 +19,7 @@ class EntitiesIndex extends Component {
             isLoading: true,
             error: null,
         };
+
         this.columnDefs = [
             { headerName: '#', field: 'id' },
             { headerName: 'Nombre', field: 'name' },
@@ -35,7 +36,7 @@ class EntitiesIndex extends Component {
                         editUrl: `/pages/dashboard/edit/entities/${params.value}/`
                     }),
             }
-        ]
+        ];
     }
 
     componentDidMount() {

@@ -38,6 +38,11 @@ export default class GamesIndex extends React.Component {
                     body:
                         "<iframe class='phaser-game' src='/games/step-6/index.html' width='100%' style='min-height: 500px' allowFullScreen></iframe>",
                 },
+                "juego-7": {
+                    title: "7. Exploración del Espacio Profundo",
+                    body:
+                        "<iframe class='phaser-game' src='/games/step-7/index.html' width='100%' style='min-height: 500px' allowFullScreen></iframe>",
+                },
             },
             // Mostrará el primer juego al entrar
             selectedContent: 0,

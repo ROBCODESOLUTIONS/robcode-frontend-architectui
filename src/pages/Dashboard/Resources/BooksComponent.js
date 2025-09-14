@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from "react";
 import GenericTable from "../../components/agGrid/genericTable";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getBooks, deleteBook } from "../../../reducers/books/reducer";
 import ResourcesRow from "../../components/agGrid/ResourcesRow";
 import ActionsRow from "../../components/agGrid/ActionsRow";
 
 const eventListeners = {
-    studentDeleted: [],
+    bookDeleted: [],
 };
 
 class BooksComponent extends Component {
@@ -24,14 +24,29 @@ class BooksComponent extends Component {
             { headerName: "Material", field: "title", flex: 1 },
             {
                 headerName: "Recurso Descargable",
-                field: 'file',
+                field: "file",
                 cellRenderer: ResourcesRow,
-                flex: 1
+                flex: 1,
             },
             {
                 headerName: "Video",
-                field: 'video',
+                field: "video",
                 cellRenderer: ResourcesRow,
+                flex: 1,
+            },
+            {
+                headerName: "Acciones",
+                field: "id",
+                cellRenderer: (params) =>
+                    ActionsRow({
+                        value: params.value,
+                        eventName: "bookDeleted",
+                        deleteDispatcher: this.props.deleteBook,
+                        authToken: JSON.parse(this.props.accessToken).access_token,
+                        eventListeners,
+                        editUrl: `/pages/dashboard/edit/books/${params.value}/`
+                    }),
+                flex: 1,
             }
         ];
     }
@@ -41,15 +56,22 @@ class BooksComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.accessToken !== prevProps.accessToken || this.props.books !== prevProps.books) {
+        if (
+            this.props.accessToken !== prevProps.accessToken ||
+            this.props.books !== prevProps.books
+        ) {
             this.fetchBooks();
         }
     }
+
     shouldComponentUpdate(nextProps, nextState) {
-        return nextState.isLoading !== this.state.isLoading ||
+        return (
+            nextState.isLoading !== this.state.isLoading ||
             nextState.error !== this.state.error ||
-            nextState.rowData !== this.state.rowData;
+            nextState.rowData !== this.state.rowData
+        );
     }
+
     async fetchBooks() {
         try {
             this.setState({ isLoading: true, error: null });
@@ -58,7 +80,10 @@ class BooksComponent extends Component {
             this.setState({ rowData: this.props.books });
         } catch (error) {
             console.error("Error fetching books: ", error);
-            this.setState({ error: "Error al obtener los libros.", rowData: [] });
+            this.setState({
+                error: "Error al obtener los libros.",
+                rowData: [],
+            });
         } finally {
             this.setState({ isLoading: false });
         }
