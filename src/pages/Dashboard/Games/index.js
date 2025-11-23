@@ -43,6 +43,36 @@ export default class GamesIndex extends React.Component {
                     body:
                         "<iframe class='phaser-game' src='/games/step-7/index.html' width='100%' style='min-height: 500px' allowFullScreen></iframe>",
                 },
+                "juego-8": {
+                    title: "8. Ingeniería de Precisión y Fabricación Robótica",
+                    body:
+                        "<iframe class='phaser-game' src='/games/step-8/index.html' width='100%' style='min-height: 500px' allowFullScreen></iframe>",
+                },
+                "juego-9": {
+                    title: "9. Biomecatrónica y Cibernética",
+                    body:
+                        "<iframe class='phaser-game' src='/games/step-9/index.html' width='100%' style='min-height: 500px' allowFullScreen></iframe>",
+                },
+                "juego-10": {
+                    title: "10. Materiales Inteligentes y Nanotecnología",
+                    body:
+                        "<iframe class='phaser-game' src='/games/step-10/index.html' width='100%' style='min-height: 500px' allowFullScreen></iframe>",
+                },
+                "juego-11": {
+                    title: "11. La Singularidad de la IA - Planeta Omega-1",
+                    body:
+                        "<iframe class='phaser-game' src='/games/step-11/index.html' width='100%' style='min-height: 500px' allowFullScreen></iframe>",
+                },
+                "juego-12": {
+                    title: "12. El Desafío Supremo",
+                    body:
+                        "<iframe class='phaser-game' src='/games/step-12/index.html' width='100%' style='min-height: 500px' allowFullScreen></iframe>",
+                },
+                "juego-13": {
+                    title: "13. Héroes de TechnoGalaxia",
+                    body:
+                        "<iframe class='phaser-game' src='/games/step-13/index.html' width='100%' style='min-height: 500px' allowFullScreen></iframe>",
+                },
             },
             // Mostrará el primer juego al entrar
             selectedContent: 0,

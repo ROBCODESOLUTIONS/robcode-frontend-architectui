@@ -14,6 +14,8 @@ class BooksComponent extends Component {
     constructor(props) {
         super(props);
 
+        const { user } = JSON.parse(this.props.accessToken);
+
         this.state = {
             rowData: [],
             isLoading: true,
@@ -37,15 +39,20 @@ class BooksComponent extends Component {
             {
                 headerName: "Acciones",
                 field: "id",
-                cellRenderer: (params) =>
-                    ActionsRow({
+                cellRenderer: (params) => {
+                    if (user.student) {
+                        return false;
+                    }
+
+                    return ActionsRow({
                         value: params.value,
                         eventName: "bookDeleted",
                         deleteDispatcher: this.props.deleteBook,
                         authToken: JSON.parse(this.props.accessToken).access_token,
                         eventListeners,
                         editUrl: `/pages/dashboard/edit/books/${params.value}/`
-                    }),
+                    })
+                },
                 flex: 1,
             }
         ];
