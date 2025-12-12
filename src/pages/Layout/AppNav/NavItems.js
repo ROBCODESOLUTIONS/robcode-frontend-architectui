@@ -2,7 +2,7 @@ const token = JSON.parse(localStorage.getItem("token"));
 if(token === null) {
     window.location.href = "/#/pages/login";
 }
-console.table(token);
+// console.table(token);
 const role = token.user.roles[0]?.name;
 
 const MainNavBase = [
