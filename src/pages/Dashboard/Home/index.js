@@ -87,6 +87,8 @@ class HomeIndex extends React.Component {
     };
 
     render() {
+
+        console.log('render HomeIndex, isModalOpen:', this.state.isModalOpen);
         return <Fragment>
             <div className="app-page-title mb-4" style={{ margin: "0" }}>
                 <div className="page-title-wrapper">
@@ -106,7 +108,14 @@ class HomeIndex extends React.Component {
                     </div>
                 </div>
             </div>
-            <Modal
+            {this.state.isModalOpen && (
+                <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, background: 'red', color: '#fff', padding: 10 }}>
+                    MODAL PRUEBA
+                    <button onClick={this.closeCreateEventModal}>Cerrar</button>
+                </div>
+            )}
+
+            {/* <Modal
                 show={this.state.isModalOpen}
                 onHide={this.closeCreateEventModal}
                 centered
@@ -156,7 +165,7 @@ class HomeIndex extends React.Component {
                         </div>
                     </form>
                 </Modal.Body>
-            </Modal>
+            </Modal> */}
             <div className="container">
                 <h1>Eventos y Anuncios</h1>
                 <EventCalendar
