@@ -36,10 +36,16 @@ const MainNavBase = [
         to: '#/pages/dashboard/students',
         roles: "admin",
     },
+    // {
+    //     icon: 'pe-7s-rocket',
+    //     label: 'Recursos',
+    //     to: '#/pages/dashboard/resources',
+    //     roles: "admin,Teacher,Student",
+    // },
     {
         icon: 'pe-7s-rocket',
-        label: 'Recursos',
-        to: '#/pages/dashboard/resources',
+        label: 'Contenido Educativo',
+        to: '#/pages/dashboard/content',
         roles: "admin,Teacher,Student",
     },
     {

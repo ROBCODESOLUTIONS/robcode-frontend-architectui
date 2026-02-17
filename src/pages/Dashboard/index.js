@@ -23,6 +23,8 @@ import CoursesIndex from "./Courses/index";
 import CoursesCreateUpdate from "./Courses/createUpdate";
 
 import ResourcesIndex from "./Resources/index";
+import ContentIndex from "./Content";
+import ContentDetail from "./Content/contentDetail";
 import GamesIndex from "./Games/index";
 import MaterialIndex from "./Material/index";
 
@@ -68,6 +70,8 @@ const Dashboards = ({ match }) => (
 
           {/* CRUD Pages - Resources */}
           <Route path={`${match.url}/games`} component={GamesIndex}/>
+          <Route exact path={`${match.url}/content`} component={ContentIndex}/>
+          <Route path={`${match.url}/content/detail/:id`} component={ContentDetail}/>
           <Route path={`${match.url}/resources`} component={ResourcesIndex}/>
           <Route path={`${match.url}/create/resource`} component={EntitiesCreateUpdate}/>
 

@@ -1,4 +1,5 @@
 import Books from "./books/reducer";
+import Content from "./content/reducer";
 import Courses from "./courses/reducer";
 import Events from "./events/reducer";
 import Entities from "./entities/reducer";
@@ -12,14 +13,15 @@ import ThemeOptions from "./ThemeOptions";
 const reducer = {
   ThemeOptions,
   RobcodeService,
-  Entities,
-  Projects,
   Books,
-  Seasons,
+  Entities,
+  Content,
   Courses,
+  Events,
+  Projects,
+  Seasons,
   Students,
   Teachers,
-  Events,
 };
 
 export default reducer;

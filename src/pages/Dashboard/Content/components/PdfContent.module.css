@@ -1,0 +1,94 @@
+.container {
+  height: 100%;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: #f3f5f7;
+}
+
+.pdfWrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.controls {
+  flex: 0 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 12px;
+  border-bottom: 1px solid #e9ecef;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(8px);
+  min-height: 54px;
+}
+
+.pdfContainer {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px 8px;
+  display: flex;
+  justify-content: center; /* centra el canvas */
+}
+
+.loading,
+.noFile,
+.error {
+  padding: 18px;
+  text-align: center;
+}
+
+.pageInfo {
+  font-weight: 600;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 6px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.btn {
+  border: 1px solid #adb5bd;
+  background: #fff;
+  color: #495057;
+  border-radius: 8px;
+  padding: 8px 10px;
+  min-height: 38px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fullscreenBtn {
+  border-color: #0d6efd;
+  background: #0d6efd;
+  color: #fff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (max-width: 420px) {
+  .controls { flex-wrap: wrap; }
+  .btn { flex: 1; min-width: 120px; }
+  .pageInfo { order: -1; flex-basis: 100%; text-align: center; }
+}
