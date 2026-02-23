@@ -93,8 +93,28 @@ class ContentDetail extends React.Component {
     };
 
     render() {
-        const { children } = this.props;
-        const activeChild = children[this.state.selectedContent];
+        const { children, accessToken } = this.props;
+        const { selectedContent } = this.state;
+
+        let userRole = 'guest';
+        try {
+            const tokenData = JSON.parse(accessToken);
+            if (tokenData?.user?.roles?.[0]?.name) {
+                userRole = tokenData.user.roles[0].name;
+            }
+        } catch (e) {
+            console.warn('Error parsing accessToken:', e);
+        }
+
+        const isStudent = userRole === 'Student';
+
+        // Filtrar PDFs para estudiantes
+        const visibleChildren = children.filter(child =>
+            !(isStudent && child.type === 'pdf')
+        );
+
+        const activeChildIndex = Math.min(selectedContent, visibleChildren.length - 1);
+        const activeChild = visibleChildren[activeChildIndex];
 
         return (
             <Fragment>
@@ -121,17 +141,13 @@ class ContentDetail extends React.Component {
                         <div className="col-lg-2 col-md-3 col-sm-12">
                             <div className="flex-column align-items-stretch pe-4 border-end">
                                 <nav className="nav nav-pills flex-column">
-                                    {children && children.map((child, index) => (
+                                    {visibleChildren.map((child, index) => (
                                         <a
                                             href="#"
                                             key={child.id}
-                                            className={`nav-link ${this.state.selectedContent === index
-                                                ? "active"
-                                                : "text-secondary text-opacity-50"
-                                                }`}
+                                            className={`nav-link ${selectedContent === index ? "active" : "text-secondary text-opacity-50"}`}
                                             onClick={(e) => {
                                                 e.preventDefault();
-                                                console.log("Index:", index, "Child ID:", child.id);
                                                 this.handleContentClick(index);
                                             }}
                                         >
