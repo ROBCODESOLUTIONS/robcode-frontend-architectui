@@ -9,7 +9,7 @@ const GameContent = ({ content }) => {
                         className='phaser-game' 
                         src={content.body}
                         width='100%' 
-                        style={{ minHeight: '500px' }}
+                        style={{ minHeight: '400px' }}
                         alt={content.title}
                         allowFullScreen/>
                 </div>

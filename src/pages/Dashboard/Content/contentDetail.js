@@ -41,6 +41,10 @@ class ContentDetail extends React.Component {
         );
     }
 
+    beforeUnmount() {
+
+    }
+
     fetchContent() {
         const { id } = this.props.match.params;
         console.log('ID:', id);
@@ -57,9 +61,9 @@ class ContentDetail extends React.Component {
         });
 
         // Si no hay hijos cargados, pedir a API
-        if (!this.props.children || this.props.children.length === 0) {
-            this.fetchContentDetail(id);
-        }
+        // if (!this.props.children || this.props.children.length === 0) {
+        this.fetchContentDetail(id);
+        // }
     }
 
     async fetchContentDetail(id) {

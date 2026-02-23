@@ -28,7 +28,7 @@ class ContentCardDetail extends React.Component {
                                     top
                                     maxwidth={(this.props.rowData.width || this.state.defaultWidth) + "px"}
                                     maxheight={(this.props.rowData.height || this.state.defaultHeight) + "px"}
-                                    src={this.props.rowData.image || this.state.defaultImage}
+                                    src={this.props.rowData.file || this.state.defaultImage}
                                     alt={this.props.rowData.title || "Card image"}
                                     className="mx-1 my-1"
                                 />
