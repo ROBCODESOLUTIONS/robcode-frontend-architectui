@@ -48,18 +48,18 @@ const MainNavBase = [
         to: '#/pages/dashboard/content',
         roles: "admin,Teacher,Student",
     },
-    {
-        icon: 'pe-7s-rocket',
-        label: 'Juegos Interactivos',
-        to: '#/pages/dashboard/games',
-        roles: "admin,Teacher,Student",
-    },
-    {
-        icon: 'pe-7s-photo',
-        label: 'Material de apoyo',
-        to: '#/pages/dashboard/material',
-        roles: "admin,Teacher,Student",
-    },
+    // {
+    //     icon: 'pe-7s-rocket',
+    //     label: 'Juegos Interactivos',
+    //     to: '#/pages/dashboard/games',
+    //     roles: "admin,Teacher,Student",
+    // },
+    // {
+    //     icon: 'pe-7s-photo',
+    //     label: 'Material de apoyo',
+    //     to: '#/pages/dashboard/material',
+    //     roles: "admin,Teacher,Student",
+    // },
     {
         icon: 'pe-7s-display2',
         label: 'Acerca de',
