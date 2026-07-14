@@ -170,7 +170,6 @@ class HomeIndex extends React.Component {
             <Modal
                 show={this.state.isModalOpen}
                 onHide={this.closeCreateEventModal}
-                backdropClassName="modal-backdrop-invisible"
                 centered
             >
                 <Modal.Header closeButton>
