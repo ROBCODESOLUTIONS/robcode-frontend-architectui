@@ -18,7 +18,8 @@ class HomeIndex extends React.Component {
         const role = roles.length > 0 ? roles[0].name.toLowerCase() : "guest";
         const isAdmin = role === "admin";
         const isTeacher = role === "teacher";
-        const teacherEntityId = user.teacher?.entity_id ?? user.teacher?.entity?.id ?? "";
+        const teacherClassroom = user.teacher?.classrooms?.[0];
+        const teacherEntityId = teacherClassroom?.entity_id ?? teacherClassroom?.entity?.id ?? "";
 
         this.state = {
             versionApp,
