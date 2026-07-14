@@ -1,5 +1,4 @@
 import Swal from 'sweetalert2';
-import { Redirect } from 'react-router';
 
 export const SET_EVENTS = 'EVENTS/SET_EVENTS';
 export const SET_EVENTS_ERROR = 'EVENTS/SET_EVENTS_ERROR'; // Nueva acción para manejar errores
@@ -54,9 +53,6 @@ export const createEvent = (accessToken, data) => {
                     throw new Error("Error creando evento.");
                 }
                 return response.json();
-            })
-            .then((data) => {
-                Redirect('/pages/dashboard/students')
             })
             .catch((error) => {
                 dispatch(setEventsError(error.message));
