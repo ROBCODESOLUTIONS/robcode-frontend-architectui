@@ -74,17 +74,25 @@ class HomeIndex extends React.Component {
     }
 
     openCreateEventModal = () => {
-        console.log('openCreateEventModal called');
-        this.setState({ isModalOpen: true });
+        const { isTeacher, teacherEntityId } = this.state;
+        this.setState({
+            isModalOpen: true,
+            newEvent: {
+                name: "",
+                start: "",
+                end: "",
+                description: "",
+                location: "",
+                entity_id: isTeacher ? teacherEntityId : "",
+            },
+        });
     };
 
     closeCreateEventModal = () => {
-        console.log('closeCreateEventModal called');
         this.setState({ isModalOpen: false });
     };
 
     handleChangeNewEvent = (e) => {
-        console.log('handleChangeNewEvent called');
         const { name, value } = e.target;
         this.setState((prevState) => ({
             newEvent: {
@@ -94,22 +102,47 @@ class HomeIndex extends React.Component {
         }));
     };
 
+    validateNewEvent = () => {
+        const { name, start, end, entity_id } = this.state.newEvent;
+
+        if (!name.trim()) {
+            Swal.fire({ title: "Error", icon: "error", text: "El nombre del evento es obligatorio." });
+            return false;
+        }
+        if (!start || !end) {
+            Swal.fire({ title: "Error", icon: "error", text: "Debes indicar fecha de inicio y fin." });
+            return false;
+        }
+        if (new Date(end) < new Date(start)) {
+            Swal.fire({ title: "Error", icon: "error", text: "La fecha de fin no puede ser anterior a la de inicio." });
+            return false;
+        }
+        if (!entity_id) {
+            Swal.fire({ title: "Error", icon: "error", text: "Debes seleccionar una entidad." });
+            return false;
+        }
+        return true;
+    };
+
     handleSubmitNewEvent = async (e) => {
-        console.log('handleSubmitNewEvent called');
         e.preventDefault();
+        if (!this.validateNewEvent()) {
+            return;
+        }
+        this.setState({ isSubmitting: true });
         try {
             const { access_token } = JSON.parse(this.props.accessToken);
-            await this.props.createEvent(this.state.newEvent, access_token);
+            await this.props.createEvent(access_token, this.state.newEvent);
             this.closeCreateEventModal();
             this.fetchEvents();
         } catch (err) {
             console.error(err);
+        } finally {
+            this.setState({ isSubmitting: false });
         }
     };
 
     render() {
-
-        console.log('render HomeIndex, isModalOpen:', this.state.isModalOpen);
         return <Fragment>
             <div className="app-page-title mb-4" style={{ margin: "0" }}>
                 <div className="page-title-wrapper">
@@ -129,14 +162,7 @@ class HomeIndex extends React.Component {
                     </div>
                 </div>
             </div>
-            {this.state.isModalOpen && (
-                <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, background: 'red', color: '#fff', padding: 10 }}>
-                    MODAL PRUEBA
-                    <button onClick={this.closeCreateEventModal}>Cerrar</button>
-                </div>
-            )}
-
-            {/* <Modal
+            <Modal
                 show={this.state.isModalOpen}
                 onHide={this.closeCreateEventModal}
                 centered
@@ -147,46 +173,93 @@ class HomeIndex extends React.Component {
                 <Modal.Body>
                     <form onSubmit={this.handleSubmitNewEvent}>
                         <div className="form-group mb-3">
-                            <label>Título</label>
+                            <label htmlFor="name">Nombre</label>
                             <input
                                 type="text"
-                                name="title"
+                                id="name"
+                                name="name"
                                 className="form-control"
-                                value={this.state.newEvent.title}
+                                value={this.state.newEvent.name}
                                 onChange={this.handleChangeNewEvent}
+                                disabled={this.state.isSubmitting}
                             />
                         </div>
                         <div className="form-group mb-3">
-                            <label>Fecha inicio</label>
+                            <label htmlFor="start">Fecha inicio</label>
                             <input
                                 type="datetime-local"
+                                id="start"
                                 name="start"
                                 className="form-control"
                                 value={this.state.newEvent.start}
                                 onChange={this.handleChangeNewEvent}
+                                disabled={this.state.isSubmitting}
                             />
                         </div>
                         <div className="form-group mb-3">
-                            <label>Fecha fin</label>
+                            <label htmlFor="end">Fecha fin</label>
                             <input
                                 type="datetime-local"
+                                id="end"
                                 name="end"
                                 className="form-control"
                                 value={this.state.newEvent.end}
                                 onChange={this.handleChangeNewEvent}
+                                disabled={this.state.isSubmitting}
                             />
                         </div>
+                        <div className="form-group mb-3">
+                            <label htmlFor="location">Ubicación</label>
+                            <input
+                                type="text"
+                                id="location"
+                                name="location"
+                                className="form-control"
+                                value={this.state.newEvent.location}
+                                onChange={this.handleChangeNewEvent}
+                                disabled={this.state.isSubmitting}
+                            />
+                        </div>
+                        <div className="form-group mb-3">
+                            <label htmlFor="description">Descripción</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                className="form-control"
+                                value={this.state.newEvent.description}
+                                onChange={this.handleChangeNewEvent}
+                                disabled={this.state.isSubmitting}
+                            />
+                        </div>
+                        {this.state.isAdmin && (
+                            <div className="form-group mb-3">
+                                <label htmlFor="entity_id">Entidad</label>
+                                <select
+                                    id="entity_id"
+                                    name="entity_id"
+                                    className="form-control"
+                                    value={this.state.newEvent.entity_id}
+                                    onChange={this.handleChangeNewEvent}
+                                    disabled={this.state.isSubmitting}
+                                >
+                                    <option value="">Selecciona una entidad</option>
+                                    {this.props.entities.map((entity) => (
+                                        <option key={entity.id} value={entity.id}>{entity.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
                         <div className="d-flex justify-content-end">
-                            <Button variant="secondary" onClick={this.closeCreateEventModal} className="me-2">
+                            <Button variant="secondary" onClick={this.closeCreateEventModal} className="me-2" disabled={this.state.isSubmitting}>
                                 Cancelar
                             </Button>
-                            <Button type="submit" variant="primary">
+                            <Button type="submit" variant="primary" disabled={this.state.isSubmitting}>
                                 Guardar
                             </Button>
                         </div>
                     </form>
                 </Modal.Body>
-            </Modal> */}
+            </Modal>
             <div className="container">
                 <h1>Eventos y Anuncios</h1>
                 <EventCalendar
