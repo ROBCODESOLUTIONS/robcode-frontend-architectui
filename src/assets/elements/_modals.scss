@@ -13,3 +13,8 @@
   box-shadow: $box-shadow-lg-default;
   @include border-radius($border-radius);
 }
+
+.modal-backdrop-invisible {
+  background-color: transparent;
+  opacity: 0 !important;
+}
