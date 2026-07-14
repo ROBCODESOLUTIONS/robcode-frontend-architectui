@@ -3,7 +3,9 @@ import EventCalendar from "./calendar";
 import { connect } from "react-redux";
 
 import { getEvents, deleteEvent, createEvent } from "../../../reducers/events/reducer";
+import { getEntities } from "../../../reducers/entities/reducer";
 import { Modal, Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const versionApp = process.env.REACT_APP_VERSION
 
@@ -11,19 +13,38 @@ class HomeIndex extends React.Component {
     constructor(props) {
         super(props);
 
+        const { user } = JSON.parse(this.props.accessToken);
+        const roles = user.roles || [];
+        const role = roles.length > 0 ? roles[0].name.toLowerCase() : "guest";
+        const isAdmin = role === "admin";
+        const isTeacher = role === "teacher";
+        const teacherEntityId = user.teacher?.entity_id ?? user.teacher?.entity?.id ?? "";
+
         this.state = {
             versionApp,
             isModalOpen: false,
+            isSubmitting: false,
+            role,
+            isAdmin,
+            isTeacher,
+            teacherEntityId,
             newEvent: {
-                title: "",
+                name: "",
                 start: "",
                 end: "",
+                description: "",
+                location: "",
+                entity_id: isTeacher ? teacherEntityId : "",
             },
         };
     }
 
     componentDidMount() {
         this.fetchEvents();
+        if (this.state.isAdmin && this.props.entities.length === 0) {
+            const { access_token } = JSON.parse(this.props.accessToken);
+            this.props.getEntities(access_token);
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -183,12 +204,14 @@ class HomeIndex extends React.Component {
 const mapStateToProps = (state) => ({
     accessToken: state.RobcodeService.accessToken,
     events: state.Events.events,
+    entities: state.Entities?.rowData ?? [],
 });
 
 const mapDispatchToProps = {
     getEvents,
     deleteEvent,
     createEvent,
+    getEntities,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeIndex);
