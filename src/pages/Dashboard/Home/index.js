@@ -57,7 +57,11 @@ class HomeIndex extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         return nextState.isLoading !== this.state.isLoading ||
             nextState.error !== this.state.error ||
-            nextState.events !== this.state.events;
+            nextState.events !== this.state.events ||
+            nextState.isModalOpen !== this.state.isModalOpen ||
+            nextState.isSubmitting !== this.state.isSubmitting ||
+            nextState.newEvent !== this.state.newEvent ||
+            nextProps.entities !== this.props.entities;
     }
 
     async fetchEvents() {
