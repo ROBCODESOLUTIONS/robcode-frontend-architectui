@@ -35,13 +35,12 @@ export const getEvents = (accessToken) => {
 };
 
 export const createEvent = (accessToken, data) => {
-    console.log(accessToken, data)
     return (dispatch) => {
         const API_URL = process.env.REACT_APP_API_URL;
         const myHeaders = new Headers();
         myHeaders.append("Accept", "application/json");
+        myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${accessToken}`);
-        console.log(accessToken, data, myHeaders.get('Authorization'))
 
         return fetch(`${API_URL}/api/events`, {
             method: 'POST',
@@ -61,6 +60,7 @@ export const createEvent = (accessToken, data) => {
                     text: error.message,
                     icon: "error"
                 });
+                throw error;
             });
     };
 };
