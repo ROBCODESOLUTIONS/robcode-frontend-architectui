@@ -9,7 +9,7 @@
   @include border-bottom-radius($border-radius);
 }
 
-.modal-dialog {
+.modal-content {
   box-shadow: $box-shadow-lg-default;
   @include border-radius($border-radius);
 }
