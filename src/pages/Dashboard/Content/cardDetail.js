@@ -18,30 +18,42 @@ class ContentCardDetail extends React.Component {
     }
 
     render() {
+        const { link_tinkercad } = this.props.rowData;
+
+        const cardBody = (
+            <CardBody>
+                <CardImg
+                    top
+                    maxwidth={(this.props.rowData.width || this.state.defaultWidth) + "px"}
+                    maxheight={(this.props.rowData.height || this.state.defaultHeight) + "px"}
+                    src={this.props.rowData.file || this.state.defaultImage}
+                    alt={this.props.rowData.title || "Card image"}
+                    className="mx-1 my-1"
+                />
+                <CardTitle className="my-1 mb-0 text-center">
+                    <h3 className="card-title">
+                        {this.props.rowData.title}
+                    </h3>
+                </CardTitle>
+                <CardSubtitle className="mb-2 text-muted">
+                    {this.props.rowData.subtitle}
+                </CardSubtitle>
+            </CardBody>
+        );
+
         return (
             <Fragment>
                 <div className={this.props.className || ''}>
                     <Card>
-                        <Link to={this.props.linkPath || ""}>
-                            <CardBody>
-                                <CardImg
-                                    top
-                                    maxwidth={(this.props.rowData.width || this.state.defaultWidth) + "px"}
-                                    maxheight={(this.props.rowData.height || this.state.defaultHeight) + "px"}
-                                    src={this.props.rowData.file || this.state.defaultImage}
-                                    alt={this.props.rowData.title || "Card image"}
-                                    className="mx-1 my-1"
-                                />
-                                <CardTitle className="my-1 mb-0 text-center">
-                                    <h3 className="card-title">
-                                        {this.props.rowData.title}
-                                    </h3>
-                                </CardTitle>
-                                <CardSubtitle className="mb-2 text-muted">
-                                    {this.props.rowData.subtitle}
-                                </CardSubtitle>
-                            </CardBody>
-                        </Link>
+                        {link_tinkercad ? (
+                            <a href={link_tinkercad} target="_blank" rel="noreferrer">
+                                {cardBody}
+                            </a>
+                        ) : (
+                            <Link to={this.props.linkPath || ""}>
+                                {cardBody}
+                            </Link>
+                        )}
                     </Card>
                 </div>
             </Fragment>

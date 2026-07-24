@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import EventCalendar from "./calendar";
 import { connect } from "react-redux";
 
-import { getEvents, deleteEvent, createEvent } from "../../../reducers/events/reducer";
+import { getEvents, deleteEvent, createEvent, updateEvent } from "../../../reducers/events/reducer";
 import { getEntities } from "../../../reducers/entities/reducer";
 import { Modal, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
@@ -25,6 +25,7 @@ class HomeIndex extends React.Component {
             versionApp,
             isModalOpen: false,
             isSubmitting: false,
+            editingEventId: null,
             role,
             isAdmin,
             isTeacher,
@@ -61,6 +62,7 @@ class HomeIndex extends React.Component {
             nextState.isModalOpen !== this.state.isModalOpen ||
             nextState.isSubmitting !== this.state.isSubmitting ||
             nextState.newEvent !== this.state.newEvent ||
+            nextState.editingEventId !== this.state.editingEventId ||
             nextProps.entities !== this.props.entities;
     }
 
@@ -82,6 +84,7 @@ class HomeIndex extends React.Component {
         const { isTeacher, teacherEntityId } = this.state;
         this.setState({
             isModalOpen: true,
+            editingEventId: null,
             newEvent: {
                 name: "",
                 start: "",
@@ -93,8 +96,29 @@ class HomeIndex extends React.Component {
         });
     };
 
+    openEditEventModal = (event) => {
+        const toLocalInput = (date) => {
+            if (!date) return "";
+            const pad = (n) => String(n).padStart(2, "0");
+            return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+        };
+
+        this.setState({
+            isModalOpen: true,
+            editingEventId: event.id,
+            newEvent: {
+                name: event.title || "",
+                start: toLocalInput(event.start),
+                end: toLocalInput(event.end),
+                description: event.extendedProps?.description || "",
+                location: event.extendedProps?.location || "",
+                entity_id: event.extendedProps?.entity_id || "",
+            },
+        });
+    };
+
     closeCreateEventModal = () => {
-        this.setState({ isModalOpen: false });
+        this.setState({ isModalOpen: false, editingEventId: null });
     };
 
     handleChangeNewEvent = (e) => {
@@ -137,7 +161,43 @@ class HomeIndex extends React.Component {
         this.setState({ isSubmitting: true });
         try {
             const { access_token } = JSON.parse(this.props.accessToken);
-            await this.props.createEvent(access_token, this.state.newEvent);
+            const { editingEventId } = this.state;
+            if (editingEventId) {
+                await this.props.updateEvent(access_token, editingEventId, this.state.newEvent);
+            } else {
+                await this.props.createEvent(access_token, this.state.newEvent);
+            }
+            this.closeCreateEventModal();
+            this.fetchEvents();
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.setState({ isSubmitting: false });
+        }
+    };
+
+    handleDeleteEvent = async () => {
+        const { editingEventId } = this.state;
+        if (!editingEventId) {
+            return;
+        }
+
+        const confirmation = await Swal.fire({
+            title: "¿Eliminar evento?",
+            text: "Esta acción no se puede deshacer.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+        });
+        if (!confirmation.isConfirmed) {
+            return;
+        }
+
+        this.setState({ isSubmitting: true });
+        try {
+            const { access_token } = JSON.parse(this.props.accessToken);
+            await this.props.deleteEvent(access_token, editingEventId);
             this.closeCreateEventModal();
             this.fetchEvents();
         } catch (err) {
@@ -173,7 +233,7 @@ class HomeIndex extends React.Component {
                 centered
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Crear evento</Modal.Title>
+                    <Modal.Title>{this.state.editingEventId ? "Editar evento" : "Crear evento"}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={this.handleSubmitNewEvent}>
@@ -255,6 +315,11 @@ class HomeIndex extends React.Component {
                             </div>
                         )}
                         <div className="d-flex justify-content-end">
+                            {this.state.editingEventId && (
+                                <Button variant="danger" onClick={this.handleDeleteEvent} className="me-auto" disabled={this.state.isSubmitting}>
+                                    Eliminar
+                                </Button>
+                            )}
                             <Button variant="secondary" onClick={this.closeCreateEventModal} className="me-2" disabled={this.state.isSubmitting}>
                                 Cancelar
                             </Button>
@@ -273,6 +338,8 @@ class HomeIndex extends React.Component {
                     createButtonText="Crear Evento"
                     onCreateEvent={this.openCreateEventModal}
                     canCreateRoles={['admin', 'Teacher']}
+                    onEditEvent={this.openEditEventModal}
+                    canEditRoles={['admin', 'Teacher']}
                 />
             </div>
         </Fragment>
@@ -289,6 +356,7 @@ const mapDispatchToProps = {
     getEvents,
     deleteEvent,
     createEvent,
+    updateEvent,
     getEntities,
 };
 

@@ -140,7 +140,16 @@ class ContentDetail extends React.Component {
                         {/* Navegación lateral */}
                         <div className="col-lg-2 col-md-3 col-sm-12">
                             <div className="flex-column align-items-stretch pe-4 border-end">
-                                <nav className="nav nav-pills flex-column">
+                                <nav
+                                    className="nav nav-pills flex-column"
+                                    style={{
+                                        height: "500px",
+                                        overflowY: "auto",
+                                        overflowX: "hidden",
+                                        flexWrap: "nowrap",
+                                        wordBreak: "break-word",
+                                    }}
+                                >
                                     {visibleChildren.map((child, index) => (
                                         <a
                                             href="#"

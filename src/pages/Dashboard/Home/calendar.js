@@ -21,10 +21,11 @@ class EventCalendar extends React.Component {
   }
 
   render() {
-    const { onCreateEvent, canCreateRoles } = this.props;
+    const { onCreateEvent, canCreateRoles, onEditEvent, canEditRoles } = this.props;
     const { role } = this.state;
 
     const canCreate = canCreateRoles ? canCreateRoles.includes(role) : false;
+    const canEdit = canEditRoles ? canEditRoles.includes(role) : false;
     return (
       <>
         {onCreateEvent && canCreate && (
@@ -48,6 +49,7 @@ class EventCalendar extends React.Component {
           }}
           events={this.props.events}  // Recibe eventos desde props
           height={this.props.height || 550}  // Altura configurable desde props con valor por defecto
+          eventClick={onEditEvent && canEdit ? (info) => onEditEvent(info.event) : undefined}
         />
       </>
     );

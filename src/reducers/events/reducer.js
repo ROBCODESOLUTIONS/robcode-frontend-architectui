@@ -65,6 +65,37 @@ export const createEvent = (accessToken, data) => {
     };
 };
 
+export const updateEvent = (accessToken, id, data) => {
+    return (dispatch) => {
+        const API_URL = process.env.REACT_APP_API_URL;
+        const myHeaders = new Headers();
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
+        return fetch(`${API_URL}/api/events/${id}`, {
+            method: 'PUT',
+            headers: myHeaders,
+            body: JSON.stringify(data)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error actualizando evento.");
+                }
+                return response.json();
+            })
+            .catch((error) => {
+                dispatch(setEventsError(error.message));
+                Swal.fire({
+                    title: "Error actualizando evento.",
+                    text: error.message,
+                    icon: "error"
+                });
+                throw error;
+            });
+    };
+};
+
 export const deleteEvent = (accessToken, id) => {
     return (dispatch) => {
         const API_URL = process.env.REACT_APP_API_URL;
