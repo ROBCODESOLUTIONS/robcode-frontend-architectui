@@ -1,10 +1,3 @@
-const token = JSON.parse(localStorage.getItem("token"));
-if(token === null) {
-    window.location.href = "/#/pages/login";
-}
-// console.table(token);
-const role = token.user.roles[0]?.name;
-
 const MainNavBase = [
     {
         icon: 'pe-7s-coffee',
@@ -68,17 +61,27 @@ const MainNavBase = [
     }
 ];
 
-const MainNavItems = MainNavBase.filter((item) => {
-    item.roles = item.roles.split(",");
-    return item.roles.includes(role);
-});
-export const UpgradeNav = [];
+// El menú depende del rol del usuario autenticado, que puede cambiar entre
+// sesiones (admin -> Teacher -> Student) sin recargar la página. Por eso se
+// recalcula en cada llamada en vez de quedar fijado al importar el módulo,
+// que era lo que dejaba visibles secciones administrativas tras cambiar de
+// usuario.
+export const getMainNav = () => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    const role = token?.user?.roles?.[0]?.name;
 
-export const MainNav = MainNavItems.length > 0 ? MainNavItems : [{
-    icon: 'pe-7s-coffee',
-    label: 'Inicio',
-    to: '#/pages/dashboard/main',
-}];
+    const items = MainNavBase
+        .map((item) => ({ ...item, roles: item.roles.split(",") }))
+        .filter((item) => item.roles.includes(role));
+
+    return items.length > 0 ? items : [{
+        icon: 'pe-7s-coffee',
+        label: 'Inicio',
+        to: '#/pages/dashboard/main',
+    }];
+};
+
+export const UpgradeNav = [];
 
 export const ComponentsNav = [
 ];

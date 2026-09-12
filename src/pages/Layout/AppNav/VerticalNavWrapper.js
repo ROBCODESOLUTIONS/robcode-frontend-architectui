@@ -5,7 +5,7 @@ import MetisMenu from "react-metismenu";
 import { setEnableMobileMenu } from "../../../reducers/ThemeOptions";
 import {
   UpgradeNav,
-  MainNav,
+  getMainNav,
   ComponentsNav,
   FormsNav,
   WidgetsNav,
@@ -30,7 +30,7 @@ class Nav extends Component {
           className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
 
         {/* <h5 className="app-sidebar__heading">Menu</h5> */}
-        <MetisMenu content={MainNav} onSelected={this.toggleMobileSidebar} activeLinkFromLocation
+        <MetisMenu key={this.props.accessToken} content={getMainNav()} onSelected={this.toggleMobileSidebar} activeLinkFromLocation
           className="vertical-nav-menu" iconNamePrefix="" classNameStateIcon="pe-7s-angle-down"/>
 
         {/* <h5 className="app-sidebar__heading">UI Components</h5> */}
@@ -58,6 +58,7 @@ class Nav extends Component {
 }
 const mapStateToProps = (state) => ({
   enableMobileMenu: state.ThemeOptions.enableMobileMenu,
+  accessToken: state.RobcodeService.accessToken,
 });
 
 const mapDispatchToProps = (dispatch) => ({
